@@ -4,13 +4,12 @@ kind: BuildConfig
 metadata:
   name: "playbook2image-pipeline" 
 spec:
-  runPolicy: Serial
   source:
     type: "Git"
     git:
       uri: "https://github.com/jcpowermac/playbook2image"
       ref: "jenkins"
   strategy:
+    type: "JenkinsPipeline"
     jenkinsPipelineStrategy:
-    type: JenkinsPipeline
-  triggers: []
+        jenkinsfilePath: Jenkinsfile 

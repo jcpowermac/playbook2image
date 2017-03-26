@@ -12,7 +12,29 @@
  * a. Use something to run this and test output ?  Job
  * 
  */
- 
+
+multibranchPipelineJob('playbook2image') {
+    branchSources {
+        github {
+            repoOwner('jcpowermac')
+            repository('playbook2image')
+            scanCredentialsId('72fb065b-94d8-4642-a81e-4ef784922e88')
+            excludes('tags/*')
+        }
+
+        orphanedItemStrategy {
+            discardOldItems {
+                numToKeep(10)
+            }
+        }
+
+        triggers {
+            // run once a day if not otherwise run
+            periodic(1440)
+        }
+    }
+}
+
 node {
     def source = ""
     if (env.CHANGE_URL) {
