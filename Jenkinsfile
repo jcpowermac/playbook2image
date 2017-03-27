@@ -13,42 +13,23 @@
  * 
  */
 
-multibranchPipelineJob('playbook2image') {
-    branchSources {
-        github {
-            repoOwner('jcpowermac')
-            repository('playbook2image')
-            scanCredentialsId('72fb065b-94d8-4642-a81e-4ef784922e88')
-            excludes('tags/*')
-        }
-
-        orphanedItemStrategy {
-            discardOldItems {
-                numToKeep(10)
-            }
-        }
-
-        triggers {
-            // run once a day if not otherwise run
-            periodic(1440)
-        }
-    }
-}
-
 node {
     def source = ""
     if (env.CHANGE_URL) {
         def newBuild = null
         def changeUrl = env.CHANGE_URL
+
+        // Query the github repo api to return the clone_url and the ref (branch name)
         def githubUri = changeUrl.replaceAll("github.com/", "api.github.com/repos/")
         githubUri = githubUri.replaceAll("pull", "pulls")
-
         sh("curl -o ${env.WORKSPACE}/github.json ${githubUri}")
         def pull = readJSON file: 'github.json'
+
 
         openshift.withCluster() {
             openshift.withProject() {
                 try {
+                    // use oc new-build to build the image using the clone_url and ref
                     newBuild = openshift.newBuild("${pull.head.repo.clone_url}#${pull.head.ref}")
                     echo "newBuild created: ${newBuild.count()} objects : ${newBuild.names()}"
                     def builds = newBuild.narrow("bc").related("builds")
@@ -79,6 +60,7 @@ node {
                             echo "${result.out}"
                             error("Image Build Failed")
                         }
+                        // After built we do not need the BuildConfig or the ImageStream
                         newBuild.delete()
                     }
                 }
