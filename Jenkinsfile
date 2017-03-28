@@ -26,7 +26,7 @@ node {
         def pull = readJSON file: 'github.json'
 
         if (pull) {
-            error("Unable to read GitHub JSON file"
+            error("Unable to read GitHub JSON file")
         }
 
         openshift.withCluster() {
