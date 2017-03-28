@@ -13,9 +13,18 @@
  * 
  */
 
+import org.kohsuke.github.GitHub
+
 node {
     def source = ""
     if (env.CHANGE_URL) {
+
+        def gitHub = GitHub.connect()
+
+        if (gitHub == null) {
+            error("github null")
+        }
+
         def newBuild = null
         def changeUrl = env.CHANGE_URL
 
@@ -25,7 +34,7 @@ node {
         sh("curl -o ${env.WORKSPACE}/github.json ${githubUri}")
         def pull = readJSON file: 'github.json'
 
-        if (pull) {
+        if (pull.head.repo == null) {
             error("Unable to read GitHub JSON file")
         }
 
