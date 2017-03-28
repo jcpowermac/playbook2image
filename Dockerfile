@@ -43,6 +43,7 @@ RUN mkdir -p ${APP_HOME} ${APP_ROOT}/etc ${APP_ROOT}/bin
 RUN chmod -R ug+x ${APP_ROOT}/bin ${APP_ROOT}/etc /tmp/user_setup && \
     /tmp/user_setup
 
+RUN echo "foo"
 # This default user is created in the openshift/base-centos7 image
 USER ${USER_UID}
 
