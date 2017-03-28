@@ -13,17 +13,10 @@
  * 
  */
 
-import org.kohsuke.github.GitHub
 
 node {
     def source = ""
     if (env.CHANGE_URL) {
-
-        def gitHub = GitHub.connect()
-
-        if (gitHub == null) {
-            error("github null")
-        }
 
         def newBuild = null
         def changeUrl = env.CHANGE_URL
@@ -31,7 +24,9 @@ node {
         // Query the github repo api to return the clone_url and the ref (branch name)
         def githubUri = changeUrl.replaceAll("github.com/", "api.github.com/repos/")
         githubUri = githubUri.replaceAll("pull", "pulls")
-        sh("curl -o ${env.WORKSPACE}/github.json ${githubUri}")
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "github" , usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            sh("curl -u jcpowermac:${env.PASSWORD} -o ${env.WORKSPACE}/github.json ${githubUri}")
+        }
         def pull = readJSON file: 'github.json'
 
         if (pull.head.repo == null) {
