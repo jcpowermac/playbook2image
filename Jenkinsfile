@@ -25,6 +25,9 @@ node {
         sh("curl -o ${env.WORKSPACE}/github.json ${githubUri}")
         def pull = readJSON file: 'github.json'
 
+        if (pull) {
+            error("Unable to read GitHub JSON file"
+        }
 
         openshift.withCluster() {
             openshift.withProject() {
