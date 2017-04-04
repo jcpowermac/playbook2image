@@ -17,6 +17,7 @@ properties([disableConcurrentBuilds()])
 
 node {
     def source = ""
+    echo sh(returnStdout: true, script: 'env')
     if (env.CHANGE_URL) {
 
         def newBuild = null
