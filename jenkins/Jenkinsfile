@@ -6,6 +6,7 @@ node {
     openshift.withCluster() {
         def secret = openshift.selector( "secret/githuboauth" ).object()
         println(secret.data)
+    }
 }
 
 def job = organizationFolder('example') {
