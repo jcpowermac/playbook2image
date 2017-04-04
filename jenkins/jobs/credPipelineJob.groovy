@@ -9,7 +9,7 @@ node {
 
     openshift.withCluster() {
         def secret = openshift.selector( "secret/github" ).object()
-        id = createCredentialsFromOpenShift(secret, "github") 
+        id = utils.createCredentialsFromOpenShift(secret, "github") 
     }
                 
     println(id)
