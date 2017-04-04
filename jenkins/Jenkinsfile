@@ -1,0 +1,10 @@
+#!groovy
+
+
+
+openshift.withCluster() {
+    def secret = openshift.selector("secret/githuboauth").object()
+    println(secret.data)
+}
+
+
