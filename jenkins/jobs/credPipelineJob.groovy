@@ -13,5 +13,5 @@ node {
     }
                 
     println(id)
-    //build job: 'seed', parameters: [[$class: 'StringParameterValue', name: 'CRED_ID', value: id]]
+    build job: 'seed', parameters: [[$class: 'StringParameterValue', name: 'CRED_ID', value: id]]
 }
