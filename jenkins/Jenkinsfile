@@ -14,7 +14,7 @@ organizationFolder('example') {
             apiUri('https://api.github.com')
 			repoOwner('jcpowermac')
 			scanCredentialsId('github')
-			pattern('(playbook2image\b)?')
+			pattern('playbook2image')
 			checkoutCredentialsId('github')
 			buildOriginBranch(true)
 			buildOriginBranchWithPR(true)
