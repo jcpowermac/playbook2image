@@ -1,15 +1,12 @@
 #!groovy
 
-
-
-node {
-    openshift.withCluster() {
-        def secret = openshift.selector( "secret/githuboauth" ).object()
-        println(secret.data)
-    }
-}
-
 def job = organizationFolder('example') {
+    steps {
+        openshift.withCluster() {
+            def secret = openshift.selector( "secret/githuboauth" ).object()
+            println(secret.data)
+        }
+    }
     description('This contains branch source jobs for Bitbucket and GitHub')
     displayName('Organization Folder')
   	orphanedItemStrategy {
