@@ -9,10 +9,9 @@ node {
 
     openshift.withCluster() {
         def secret = openshift.selector( "secret/github" ).object()
-        println(secret.data)
-        //id = utils.createCredentials("username","password", "github")
+        id = createCredentialsFromOpenShift(secret, "github") 
     }
                 
-    //println(id)
+    println(id)
     //build job: 'seed', parameters: [[$class: 'StringParameterValue', name: 'CRED_ID', value: id]]
 }
