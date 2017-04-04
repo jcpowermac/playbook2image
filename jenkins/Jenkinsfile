@@ -4,8 +4,8 @@ organizationFolder('example') {
     description('This contains branch source jobs for Bitbucket and GitHub')
     displayName('Organization Folder')
   	orphanedItemStrategy {
-		daysToKeep(0)
-		numToKeep(0)
+		daysToKeep((Integer)0)
+		numToKeep((Integer)0)
 	}
 	organizations {
 		github {
