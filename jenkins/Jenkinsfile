@@ -11,6 +11,7 @@ organizationFolder('example') {
 	}
 	organizations {
 		github {
+            apiUri('https://api.github.com')
 			repoOwner('jcpowermac')
 			scanCredentialsId('github')
 			pattern('(playbook2image\b)?')
