@@ -1,6 +1,14 @@
 #!groovy
 
-organizationFolder('example') {
+
+
+node {
+    openshift.withCluster() {
+        def secret = openshift.selector( "secret/githuboauth" ).object()
+        println(secret.data)
+}
+
+def job = organizationFolder('example') {
     description('This contains branch source jobs for Bitbucket and GitHub')
     displayName('Organization Folder')
   	orphanedItemStrategy {
@@ -28,3 +36,5 @@ organizationFolder('example') {
         periodic(10)
     }
 }
+
+queue(job)
