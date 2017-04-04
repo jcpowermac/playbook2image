@@ -13,6 +13,7 @@
  * 
  */
 
+properties([disableConcurrentBuilds()])
 
 node {
     def source = ""
