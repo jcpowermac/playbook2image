@@ -2,22 +2,10 @@
 
 // vim: ft=groovy
 
-/*
- * Process
- * 1. Create image from Dockerfile
- * a. Use new-build to create image
- * 2. Create S2I image from test source
- * a. Use new-build to create s2i image
- * 3. Run image testing output
- * a. Use something to run this and test output ?  Job
- * 
- */
-
 properties([disableConcurrentBuilds()])
 
 node {
     def source = ""
-    echo sh(returnStdout: true, script: 'env')
     if (env.CHANGE_URL) {
 
         def newBuild = null
