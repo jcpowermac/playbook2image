@@ -40,7 +40,8 @@ def call(Closure body) {
                        This will not work:
                        openshift.run(args)
                      */
-                    new Utils().openShiftRun(openshift, args)
+                    openshift.run(args)
+                    //new Utils().openShiftRun(openshift, args)
                     pod = openshift.selector("pod/${config.branch}")
 
                     timeout(10) {
